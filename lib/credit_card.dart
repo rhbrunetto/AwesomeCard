@@ -6,11 +6,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreditCard extends StatefulWidget {
+  final String hintCardNumber;
+  final String hintCardExpiry;
+  final String hintCardHolderName;
+  final String hintCvv;
   final String cardNumber;
   final String cardExpiry;
   final String cardHolderName;
   final String bankName;
   final String cvv;
+  final Color color;
   final Color frontTextColor;
   final Color backTextColor;
   final bool showBackSide;
@@ -22,26 +27,33 @@ class CreditCard extends StatefulWidget {
   final CardType cardType;
   final double width;
   final double height;
+  final Function(CardType) notificator;
 
-  CreditCard(
-      {Key key,
-      this.cardNumber,
-      this.cardExpiry,
-      this.cardHolderName,
-      this.bankName = "",
-      this.cvv,
-      this.showBackSide = false,
-      @required this.frontBackground,
-      @required this.backBackground,
-      this.cardType,
-      this.frontLayout,
-      this.backLayout,
-      this.frontTextColor = Colors.white,
-      this.backTextColor = Colors.black,
-      this.showShadow = false,
-      this.width,
-      this.height})
-      : assert(frontBackground != null),
+  CreditCard({
+    Key key,
+    this.notificator,
+    this.hintCardNumber,
+    this.hintCardExpiry,
+    this.hintCardHolderName,
+    this.hintCvv,
+    this.cardNumber,
+    this.cardExpiry,
+    this.cardHolderName,
+    this.bankName = "",
+    this.cvv,
+    this.showBackSide = false,
+    @required this.frontBackground,
+    @required this.backBackground,
+    this.color,
+    this.cardType,
+    this.frontLayout,
+    this.backLayout,
+    this.frontTextColor = Colors.white,
+    this.backTextColor = Colors.black,
+    this.showShadow = false,
+    this.width,
+    this.height,
+  })  : assert(frontBackground != null),
         assert(backBackground != null),
         super(key: key);
 
@@ -116,16 +128,21 @@ class _CreditCardState extends State<CreditCard>
             animation: _moveToBack,
             child: _buildFrontCard(),
           ),
-          AwesomeCard(
-            animation: _moveToFront,
-            child: _buildBackCard(),
-          ),
+          // AwesomeCard(
+          //   animation: _moveToFront,
+          //   child: _buildBackCard(),
+          // ),
         ],
       ),
     );
   }
 
   Widget _buildFrontCard() {
+    if (widget.notificator != null) {
+      widget.notificator(
+        getCardType(widget.cardNumber),
+      );
+    }
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       width: cardWidth,
@@ -134,7 +151,7 @@ class _CreditCardState extends State<CreditCard>
         boxShadow: widget.showShadow
             ? [
                 BoxShadow(
-                  color: Colors.black,
+                  color: widget.color ?? Colors.black,
                   blurRadius: 12.0,
                   spreadRadius: 0.2,
                   offset: Offset(
@@ -155,16 +172,21 @@ class _CreditCardState extends State<CreditCard>
             // Front Side Layout
             widget.frontLayout ??
                 CardFrontLayout(
-                        bankName: widget.bankName,
-                        cardNumber: widget.cardNumber,
-                        cardExpiry: widget.cardExpiry,
-                        cardHolderName: widget.cardHolderName,
-                        cardTypeIcon: getCardTypeIcon(cardType: widget.cardType,
-                            cardNumber: widget.cardNumber),
-                        cardHeight: cardHeight,
-                        cardWidth: cardWidth,
-                        textColor: widget.frontTextColor)
-                    .layout1(),
+                  hintCardNumber: widget.hintCardNumber,
+                  hintCardExpiry: widget.hintCardExpiry,
+                  hintCardHolderName: widget.hintCardHolderName,
+                  bankName: widget.bankName,
+                  cardNumber: widget.cardNumber,
+                  cardExpiry: widget.cardExpiry,
+                  cardHolderName: widget.cardHolderName,
+                  cardTypeIcon: getCardTypeIcon(
+                    cardType: widget.cardType,
+                    cardNumber: widget.cardNumber,
+                  ),
+                  cardHeight: cardHeight,
+                  cardWidth: cardWidth,
+                  textColor: widget.frontTextColor,
+                ).layout1(),
           ],
         ),
       ),

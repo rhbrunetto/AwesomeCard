@@ -1,4 +1,12 @@
-<a href="https://github.com/iamvivekkaushik/AwesomeCard">
+
+# ATENTION
+
+Front layout in construction.
+
+Back layout disabled.
+
+
+<!-- <a href="https://github.com/iamvivekkaushik/AwesomeCard">
 <img align="left" src="https://raw.githubusercontent.com/iamvivekkaushik/AwesomeCard/master/screenshot/card.gif" width="400" height="250" /></a>
 
 <p><h2 align="left">Awesome Card</h2></p>
@@ -63,4 +71,4 @@ For more detail on usage, check out the example provided.
 ## 📄 License
 
 Awesome Card is released under the MIT license.
-See [LICENSE](./LICENSE) for details.
+See [LICENSE](./LICENSE) for details. -->

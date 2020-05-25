@@ -9,16 +9,25 @@ class CardFrontLayout {
   double cardWidth;
   double cardHeight;
   Color textColor;
+  Color color;
+  String hintCardNumber;
+  String hintCardExpiry;
+  String hintCardHolderName;
 
-  CardFrontLayout(
-      {this.bankName = "",
-      this.cardNumber = "",
-      this.cardExpiry = "",
-      this.cardHolderName = "",
-      this.cardTypeIcon,
-      this.cardWidth = 0,
-      this.cardHeight = 0,
-      this.textColor});
+  CardFrontLayout({
+    this.bankName = "",
+    this.cardNumber = "",
+    this.cardExpiry = "",
+    this.cardHolderName = "",
+    this.cardTypeIcon,
+    this.cardWidth = 0,
+    this.cardHeight = 0,
+    this.textColor,
+    this.color,
+    this.hintCardNumber,
+    this.hintCardExpiry,
+    this.hintCardHolderName,
+  });
 
   Widget layout1() {
     return Padding(
@@ -40,9 +49,10 @@ class CardFrontLayout {
                   child: Text(
                     bankName,
                     style: TextStyle(
-                        color: textColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500),
+                      color: textColor,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
@@ -65,7 +75,8 @@ class CardFrontLayout {
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                child: Row(
+                child: Flex(
+                  direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
@@ -76,7 +87,7 @@ class CardFrontLayout {
                       children: <Widget>[
                         Text(
                           cardNumber == null || cardNumber.isEmpty
-                              ? 'XXXX XXXX XXXX XXXX'
+                              ? (hintCardNumber ?? 'XXXX XXXX XXXX XXXX')
                               : cardNumber,
                           style: TextStyle(
                               package: 'awesome_card',
@@ -93,12 +104,13 @@ class CardFrontLayout {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "Exp. Date",
+                              (hintCardExpiry ?? 'Exp. Date'),
                               style: TextStyle(
-                                  package: 'awesome_card',
-                                  color: textColor,
-                                  fontFamily: "MavenPro",
-                                  fontSize: 15),
+                                package: 'awesome_card',
+                                color: textColor,
+                                fontFamily: "MavenPro",
+                                fontSize: 15,
+                              ),
                             ),
                             SizedBox(
                               width: 10,
@@ -121,7 +133,7 @@ class CardFrontLayout {
                         ),
                         Text(
                           cardHolderName == null || cardHolderName.isEmpty
-                              ? "Card Holder"
+                              ? (hintCardHolderName ?? 'Card Holder')
                               : cardHolderName,
                           style: TextStyle(
                               package: 'awesome_card',
@@ -130,10 +142,12 @@ class CardFrontLayout {
                               fontFamily: "MavenPro",
                               fontSize: 17),
                         ),
-
                       ],
                     ),
-                    cardTypeIcon
+                    Flexible(
+                      flex: 5,
+                      child: cardTypeIcon,
+                    ),
                   ],
                 ),
               ),

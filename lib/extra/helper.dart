@@ -108,5 +108,3 @@ CardType getCardType(String cardNumber) {
 
   return CardType.other;
 }
-
-
