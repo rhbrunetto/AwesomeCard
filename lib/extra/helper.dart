@@ -60,7 +60,7 @@ Widget getCardTypeIcon({CardType cardType, String cardNumber}) {
         package: 'awesome_card',
       );
     default:
-      return Container();
+      return null;
   }
 }
 
